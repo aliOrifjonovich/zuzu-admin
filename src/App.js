@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
+import DynecmicTable from "./components/Table/DynecmicTable";
+import Navbar from "./components/Navbar/Navbar";
+import Search from "./components/Search/Search";
+import Form from "./components/Form/Form";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar />
+      <div className="routes">
+        <Search />
+        <Routes>
+          <Route path="/:slug" element={<DynecmicTable/>} />
+          <Route path="/:slug/create" element={<Form />} />
+          <Route path="/:slug/update/:id" element={<Form/>}/>
+        </Routes>
+      </div>
     </div>
   );
 }
