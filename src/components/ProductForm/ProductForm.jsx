@@ -5,16 +5,15 @@ import {
   Box,
   Heading,
   Button,
-  Text,
 } from "@chakra-ui/react";
-import { create } from "../../API/services";
+import { create, getById } from "../../API/services";
 import cls from "./product.module.scss";
-import { AddIcon } from "@chakra-ui/icons";
-import { useState } from "react";
+import { AddIcon, RepeatIcon } from "@chakra-ui/icons";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 const ProductForm = () => {
-  const { slug } = useParams();
+  const { id, slug } = useParams();
   const [data, setData] = useState({
     name: "",
     description: "",
@@ -28,6 +27,16 @@ const ProductForm = () => {
     e.preventDefault();
     create("products", data);
   };
+
+  useEffect(() => {
+    if (id) {
+      getById("products", id).then((response) => {
+        console.log(response);
+        console.log(response.data);
+        setData(response.data);
+      });
+    }
+  }, []);
 
   return (
     <form onSubmit={onSubmit} className={cls.form_wrapper}>
@@ -48,9 +57,13 @@ const ProductForm = () => {
           }}
           className={cls.breadCrumb}
         >
-          <Link to="/"><p>Home</p></Link>
+          <Link to="/">
+            <p>Home</p>
+          </Link>
           <span>/</span>
-          <Link to={`/${slug}`}><p>{slug}</p> </Link>
+          <Link to={`/${slug}`}>
+            <p>{slug}</p>{" "}
+          </Link>
           <span>/</span>
           <span>Create Page</span>
         </Box>
@@ -81,9 +94,15 @@ const ProductForm = () => {
           />
           <FormErrorMessage>We'll never share your email.</FormErrorMessage>
         </Box>
-        <Button leftIcon={<AddIcon />} colorScheme="blue" type="submit">
-          ADD new branch
-        </Button>
+        {id ? (
+          <Button leftIcon={<RepeatIcon/>} colorScheme="blue" type="submit">
+            Update
+          </Button>
+        ) : (
+          <Button leftIcon={<AddIcon />} colorScheme="blue" type="submit">
+            ADD new branch
+          </Button>
+        )}
       </Box>
     </form>
   );

@@ -74,7 +74,7 @@ const DynecmicTable = () => {
                 ))}
                 <Td>
                   <Flex gap={2}>
-                    <Link to={`/${slug}/update/:${element.id}`}>
+                    <Link to={`/${slug}/update/${element.id}`}>
                       <Button
                         // isLoading={isLoading}
                         leftIcon={<RepeatIcon />}

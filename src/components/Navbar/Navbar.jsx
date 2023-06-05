@@ -36,12 +36,6 @@ const Navbar = () => {
             Products
           </p>
         </Link>
-        <Link to="/contact">
-          <p>
-            <box-icon name="contact" type="solid" size="30px"></box-icon>
-            Contact
-          </p>
-        </Link>
       </div>
       <FormControl display="flex" alignItems="center" sx={{
         display: 'flex',

@@ -3,8 +3,6 @@ import cls from "./search.module.scss";
 import { Center } from "@chakra-ui/react";
 const Search = () => {
     const InputRef = useRef();
-    console.log(InputRef);
-
   return (
     <div className={cls.search_wrapper} onClick={()=>InputRef.current.focus()}>
       <form>
