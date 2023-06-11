@@ -6,11 +6,12 @@ import {
   Heading,
   Button,
 } from "@chakra-ui/react";
-import { create, getById } from "../../API/services";
+import { create, getById, update } from "../../API/services";
 import cls from "./product.module.scss";
 import { AddIcon, RepeatIcon } from "@chakra-ui/icons";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useToast } from "@chakra-ui/react";
 
 const ProductForm = () => {
   const { id, slug } = useParams();
@@ -20,23 +21,36 @@ const ProductForm = () => {
     price: "",
   });
 
+  const nameRef = useRef();
+  const descriptionRef = useRef();
+  const priceRef = useRef();
+
   const onChange = (name, value) => {
     setData((old) => ({ ...old, [`${name}`]: value }));
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    create("products", data);
+    if (id) {
+      update("products", id, data);
+    } else {
+      create("products", data);
+    }
+  };
+
+  const onClear = () => {
+    nameRef.current.value = "";
+    descriptionRef.current.value = "";
+    priceRef.current.value = "";
   };
 
   useEffect(() => {
     if (id) {
       getById("products", id).then((response) => {
-        console.log(response);
-        console.log(response.data);
         setData(response.data);
       });
     }
   }, []);
+  const toast = useToast();
 
   return (
     <form onSubmit={onSubmit} className={cls.form_wrapper}>
@@ -72,6 +86,7 @@ const ProductForm = () => {
         <Box>
           <FormLabel textTransform="capitalize">Name</FormLabel>
           <Input
+            ref={nameRef}
             onChange={(e) => onChange("name", e.target.value)}
             value={data.name}
           />
@@ -80,6 +95,7 @@ const ProductForm = () => {
         <Box>
           <FormLabel textTransform="capitalize">description</FormLabel>
           <Input
+            ref={descriptionRef}
             onChange={(e) => onChange("description", e.target.value)}
             value={data.description}
           />
@@ -88,6 +104,7 @@ const ProductForm = () => {
         <Box>
           <FormLabel textTransform="capitalize">price</FormLabel>
           <Input
+            ref={priceRef}
             onChange={(e) => onChange("price", e.target.value)}
             value={data.price}
             type="number"
@@ -95,9 +112,23 @@ const ProductForm = () => {
           <FormErrorMessage>We'll never share your email.</FormErrorMessage>
         </Box>
         {id ? (
-          <Button leftIcon={<RepeatIcon/>} colorScheme="blue" type="submit">
-            Update
-          </Button>
+            <Button
+              leftIcon={<RepeatIcon />}
+              colorScheme="blue"
+              type="submit"
+              onClick={() => {
+                toast({
+                  title: "Successfully updated",
+                  description: "Go to Products List",
+                  status: "success",
+                  duration: 9000,
+                  isClosable: true,
+                });
+                onClear();
+              }}
+            >
+              Update
+            </Button>
         ) : (
           <Button leftIcon={<AddIcon />} colorScheme="blue" type="submit">
             ADD new branch

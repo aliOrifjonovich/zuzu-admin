@@ -5,7 +5,7 @@ import LogoImg from "../../Imgs/Logo.png";
 import "boxicons";
 import { FormControl, FormLabel, Switch } from "@chakra-ui/react";
 
-const Navbar = () => {
+const Navbar = ({ setIsDark }) => {
   return (
     <div className={cls.navbar}>
       <div className={cls.logo_text}>
@@ -18,12 +18,6 @@ const Navbar = () => {
       </div>
       <span className={cls.line}></span>
       <div className={cls.pages}>
-        <Link to="/">
-          <p>
-            <box-icon name="dashboard" type="solid" size="30px"></box-icon>
-            Dashboard
-          </p>
-        </Link>
         <Link to="/branches">
           <p>
             <box-icon type="solid" name="home" size="30px"></box-icon>
@@ -37,18 +31,22 @@ const Navbar = () => {
           </p>
         </Link>
       </div>
-      <FormControl display="flex" alignItems="center" sx={{
-        display: 'flex',
-        flexDirection:"row",
-        alignItems: 'center',
-        gap:"3rem",
+      <FormControl
+        display="flex"
+        alignItems="center"
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          gap: "3rem",
 
-        position:"absolute",
-        bottom:"2rem",
-        maxWidth: "220px",
-        border: "1px solid #ccc",
-        borderRadius: "5px",
-      }}>
+          position: "absolute",
+          bottom: "2rem",
+          maxWidth: "220px",
+          border: "1px solid #ccc",
+          borderRadius: "5px",
+        }}
+      >
         <FormLabel
           htmlFor="email-alerts"
           mb="0"
@@ -58,15 +56,20 @@ const Navbar = () => {
             alignItems: "center",
             gap: "1rem",
             padding: "10px 6px",
-            fontSize:"1.2rem",
-            fontWeight:"500",
-            letterSpacing: "2px"
+            fontSize: "1.2rem",
+            fontWeight: "500",
+            letterSpacing: "2px",
           }}
         >
           <box-icon name="moon" size="30px"></box-icon>
           DARK
         </FormLabel>
-        <Switch colorScheme="teal" id="email-alerts" size="md" />
+        <Switch
+          colorScheme="teal"
+          id="email-alerts"
+          size="md"
+          onChange={(e) => setIsDark(e.target.checked)}
+        />
       </FormControl>
     </div>
   );

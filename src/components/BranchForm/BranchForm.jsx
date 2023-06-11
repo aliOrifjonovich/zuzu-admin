@@ -12,6 +12,8 @@ import { AddIcon } from "@chakra-ui/icons";
 import { useEffect, useRef, useState } from "react";
 import { create, getById, update } from "../../API/services";
 import { Link, useParams } from "react-router-dom";
+import { useToast } from "@chakra-ui/react";
+import { useMutation, useQuery } from "react-query";
 
 const BranchForm = () => {
   const { id, slug } = useParams();
@@ -29,17 +31,30 @@ const BranchForm = () => {
     address: "",
   });
 
+  console.log("data", data);
+  const toast = useToast();
+  const updateMutation = useMutation(update, {
+    onSuccess: () => {
+    },
+  });
+  const createMutation = useMutation(create, {onSuccess: () => {}})
+  // onChange Function
   const onChange = (name, value) => {
     setData((old) => ({ ...old, [`${name}`]: value }));
   };
+  // onSubmit function
   const onSubmit = (e) => {
     e.preventDefault();
     if (id) {
+      // updateMutation.mutate({ slug: "branches", id, data });
       update("branches", id, data);
     } else {
+      console.log("data", data)
+      // createMutation.mutate({ slug: "branches", data });
       create("branches", data);
     }
   };
+  // onClear Function
   const onClear = () => {
     nameRef.current.value = "";
     descriptionRef.current.value = "";
@@ -47,6 +62,7 @@ const BranchForm = () => {
     toTimeRef.current.value = "";
     addressRef.current.value = "";
   };
+
   useEffect(() => {
     if (id) {
       getById("branches", id).then((response) => {
@@ -79,7 +95,7 @@ const BranchForm = () => {
           </Link>
           <span>/</span>
           <Link to={`/${slug}`}>
-            <p>{slug}</p>{" "}
+            <p>{slug}</p>
           </Link>
           <span>/</span>
           <span>Create Page</span>
@@ -102,7 +118,6 @@ const BranchForm = () => {
             onChange={(e) => onChange("description", e.target.value)}
             value={data.description}
           />
-          <FormErrorMessage>We'll never share your email.</FormErrorMessage>
         </Box>
         <Box>
           <FormLabel textTransform="capitalize">starting time</FormLabel>
@@ -132,7 +147,22 @@ const BranchForm = () => {
           <FormErrorMessage>We'll never share your email.</FormErrorMessage>
         </Box>
         {id ? (
-          <Button leftIcon={<AddIcon />} type="submit" onClick={onClear}>
+          <Button
+            width={"100%"}
+            leftIcon={<AddIcon />}
+            colorScheme="blue"
+            type="submit"
+            onClick={() => {
+              toast({
+                title: "Successfully updated",
+                description: "Go to Branches List",
+                status: "success",
+                duration: 9000,
+                isClosable: true,
+              });
+              onClear();
+            }}
+          >
             Update
           </Button>
         ) : (
@@ -140,7 +170,16 @@ const BranchForm = () => {
             leftIcon={<AddIcon />}
             colorScheme="blue"
             type="submit"
-            onClick={onClear}
+            onClick={() => {
+              toast({
+                title: "Successfully Added",
+                description: "Go to Branches List",
+                status: "success",
+                duration: 9000,
+                isClosable: true,
+              });
+              onClear();
+            }}
           >
             ADD new branch
           </Button>
