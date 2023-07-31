@@ -71,10 +71,6 @@ const ProductForm = () => {
           }}
           className={cls.breadCrumb}
         >
-          <Link to="/">
-            <p>Home</p>
-          </Link>
-          <span>/</span>
           <Link to={`/${slug}`}>
             <p>{slug}</p>{" "}
           </Link>
@@ -112,23 +108,23 @@ const ProductForm = () => {
           <FormErrorMessage>We'll never share your email.</FormErrorMessage>
         </Box>
         {id ? (
-            <Button
-              leftIcon={<RepeatIcon />}
-              colorScheme="blue"
-              type="submit"
-              onClick={() => {
-                toast({
-                  title: "Successfully updated",
-                  description: "Go to Products List",
-                  status: "success",
-                  duration: 9000,
-                  isClosable: true,
-                });
-                onClear();
-              }}
-            >
-              Update
-            </Button>
+          <Button
+            leftIcon={<RepeatIcon />}
+            colorScheme="blue"
+            type="submit"
+            onClick={() => {
+              toast({
+                title: "Successfully updated",
+                description: "Go to Products List",
+                status: "success",
+                duration: 9000,
+                isClosable: true,
+              });
+              onClear();
+            }}
+          >
+            Update
+          </Button>
         ) : (
           <Button leftIcon={<AddIcon />} colorScheme="blue" type="submit">
             ADD new branch

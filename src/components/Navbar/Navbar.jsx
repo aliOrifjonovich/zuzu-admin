@@ -9,10 +9,10 @@ const Navbar = ({ setIsDark }) => {
   return (
     <div className={cls.navbar}>
       <div className={cls.logo_text}>
-        <Link to="/">
+        <Link to="/branches">
           <img src={LogoImg} alt="img" />
         </Link>
-        <Link to="/">
+        <Link to="/branches">
           <h1> Zuzu admin</h1>
         </Link>
       </div>
@@ -31,46 +31,6 @@ const Navbar = ({ setIsDark }) => {
           </p>
         </Link>
       </div>
-      <FormControl
-        display="flex"
-        alignItems="center"
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          gap: "3rem",
-
-          position: "absolute",
-          bottom: "2rem",
-          maxWidth: "220px",
-          border: "1px solid #ccc",
-          borderRadius: "5px",
-        }}
-      >
-        <FormLabel
-          htmlFor="email-alerts"
-          mb="0"
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            gap: "1rem",
-            padding: "10px 6px",
-            fontSize: "1.2rem",
-            fontWeight: "500",
-            letterSpacing: "2px",
-          }}
-        >
-          <box-icon name="moon" size="30px"></box-icon>
-          DARK
-        </FormLabel>
-        <Switch
-          colorScheme="teal"
-          id="email-alerts"
-          size="md"
-          onChange={(e) => setIsDark(e.target.checked)}
-        />
-      </FormControl>
     </div>
   );
 };

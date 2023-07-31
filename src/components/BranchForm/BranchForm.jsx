@@ -34,10 +34,9 @@ const BranchForm = () => {
   console.log("data", data);
   const toast = useToast();
   const updateMutation = useMutation(update, {
-    onSuccess: () => {
-    },
+    onSuccess: () => {},
   });
-  const createMutation = useMutation(create, {onSuccess: () => {}})
+  const createMutation = useMutation(create, { onSuccess: () => {} });
   // onChange Function
   const onChange = (name, value) => {
     setData((old) => ({ ...old, [`${name}`]: value }));
@@ -49,7 +48,7 @@ const BranchForm = () => {
       // updateMutation.mutate({ slug: "branches", id, data });
       update("branches", id, data);
     } else {
-      console.log("data", data)
+      console.log("data", data);
       // createMutation.mutate({ slug: "branches", data });
       create("branches", data);
     }
@@ -90,10 +89,6 @@ const BranchForm = () => {
           }}
           className={cls.breadCrumb}
         >
-          <Link to="/">
-            <p>Home</p>
-          </Link>
-          <span>/</span>
           <Link to={`/${slug}`}>
             <p>{slug}</p>
           </Link>

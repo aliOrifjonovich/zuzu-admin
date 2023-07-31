@@ -54,6 +54,7 @@ const DynecmicTable = ({ searchValue }) => {
   const onDeleteClick = (id) => {
     deleteMutation.mutate({ slug, id });
     setDeleteId(id);
+    console.log(slug, id);
   };
   const fields = data?.length ? Object.keys(data[0]) : [];
   const toast = useToast();

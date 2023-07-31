@@ -5,27 +5,24 @@ import Navbar from "./components/Navbar/Navbar";
 import Search from "./components/Search/Search";
 import Form from "./components/Form/Form";
 import { useEffect, useState } from "react";
+import BranchForm from "./components/BranchForm/BranchForm";
 
 function App() {
-  const [isDark, setIsDark] =useState(false);
-  const [searchValue, setSearchValue]= useState("")
-  useEffect(() => {
-    if(isDark) {
-      document.body.classList.add("darkMode")
-    }else{
-      document.body.classList.remove("darkMode")
-    }
-  }, [isDark]);
+  const [searchValue, setSearchValue] = useState("");
 
   return (
     <div className="App">
-      <Navbar  setIsDark={setIsDark}/>
+      <Navbar />
       <div className="routes">
-        <Search  searchValue={searchValue} setSearchValue={setSearchValue}/>
+        <Search searchValue={searchValue} setSearchValue={setSearchValue} />
         <Routes>
-          <Route path="/:slug" element={<DynecmicTable searchValue={searchValue}/>} />
+          <Route path="/" element={<BranchForm />} />
+          <Route
+            path="/:slug"
+            element={<DynecmicTable searchValue={searchValue} />}
+          />
           <Route path="/:slug/create" element={<Form />} />
-          <Route path="/:slug/update/:id" element={<Form/>}/>
+          <Route path="/:slug/update/:id" element={<Form />} />
         </Routes>
       </div>
     </div>
